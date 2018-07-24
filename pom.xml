@@ -93,6 +93,12 @@
             <version>1.8.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-core</artifactId>
+            <version>7.7.1</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!--<dependency>-->
         <!--<groupId>osworkflow</groupId>-->
@@ -154,8 +160,10 @@
                         <!-- Add package to export here -->
                         <Export-Package>com.mbb.jira.postfunction.api,</Export-Package>
                         <!-- Add package import here -->
-                        <Import-Package>org.springframework.osgi.*;resolution:="optional",
-                            org.eclipse.gemini.blueprint.*;resolution:="optional", *;resolution:="optional"
+                        <Import-Package>
+                            org.springframework.osgi.*;resolution:="optional",
+                            org.eclipse.gemini.blueprint.*;resolution:="optional",
+                            *;resolution:="optional"
                         </Import-Package>
                         <!-- Ensure plugin is spring powered -->
                         <Spring-Context>*</Spring-Context>
