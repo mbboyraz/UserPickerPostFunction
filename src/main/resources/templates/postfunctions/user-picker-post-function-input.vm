@@ -1,37 +1,129 @@
-<html>
-<body>
-<div>
+##<html>
+##<body>
+##<a href="#dropdown2-checkbox-radio-interactive-trigger" aria-owns="dropdown2-checkbox-radio-interactive" aria-haspopup="true" class="aui-button aui-style-default aui-dropdown2-trigger">
+##    Dropdown trigger
+##</a>
+##<div>
+##    <tr>
+##        <td valign="top" bgcolor="fffff0">
+##            <span class="label">Custom Fields:</span>
+##        </td>
+##        <td bgcolor="ffffff">
+##            <table cellpadding="2" cellspacing="2">
+##
+##
+##                    <tr>
+##                        #foreach ($customs in $customFields)
+##                    <td>
+##
+##
+##                            #if (${selectedCustomField})
+##                                #if (${selectedCustomField.contains($customs.Id)})
+##                                    DISABLED
+##                                #end
+##                            #end
+##
+##                        <div id="dropdown2-checkbox-radio-interactive" class="aui-dropdown2 aui-style-default">
+##                            <div class="aui-dropdown2-section">
+##                                <ul>
+##                                    <li><a class="aui-dropdown2-radio interactive checked">$customs.Name</a></li>
+##
+##                                </ul>
+##                            </div>
+##                            <div class="aui-dropdown2-section">
+##                                <ul>
+##                                    <li><a id="spellcheck" class="aui-dropdown2-checkbox interactive">Check spelling while typing</a></li>
+##                                    <li><a class="aui-dropdown2-checkbox interactive checked disabled">Enable gravity</a></li>
+##                                </ul>
+##                            </div>
+##                        </div>
+##                            #if (${selectedCustomField})
+##                                #if (${selectedCustomField.contains($customs.Id)})
+##                                    CHECKED
+##                                #end
+##                            #end
+##                            <td>#displayConstantIcon ($customs)&nbsp;$customs.Name</td>
+##
+##
+##                        </td>
+##                        #end
+##                    </tr><tr>
+###foreach ($customs in $customFields)
+##                        <td>
+##
+##
+##
+##                            <div id=$customs.Id class="aui-dropdown2 aui-style-default">
+##                                <div class="aui-dropdown2-section">
+##                                    <ul>
+##                                        <li><a class="aui-dropdown2-radio interactive checked">$customs.Name</a></li>
+##                                        #if (${selectedCustomField})
+##                                            #if (${selectedCustomField.contains($customs.Id)})
+##                                                DISABLED
+##                                            #end
+##                                        #end
+##                                    </ul>
+##                                </div>
+##                                <div class="aui-dropdown2-section">
+##                                    <ul>
+##                                        <li><a id="spellcheck" class="aui-dropdown2-checkbox interactive">Check spelling while typing</a></li>
+##                                        <li><a class="aui-dropdown2-checkbox interactive checked disabled">Enable gravity</a></li>
+##                                    </ul>
+##                                </div>
+##                </td>
+##                            <td>#displayConstantIcon ($customs)&nbsp;$customs.Name</td>
+###end
+##            </tr>
+##
+##
+##
+##
+##
+##                    ##                        <td><input type="checkbox" name="$customs.getId()"
+##                    ##                            #if (${selectedCustomField})
+##                    ##                                #if (${selectedCustomField.contains($customs.Id)})
+##                    ##                                   CHECKED
+##                    ##                                #end
+##                    ##                            #end
+##                    ##                        ></td>
+##                    ##                        <td>#displayConstantIcon ($customs)&nbsp;$customs.Name</td>
+##                    </tr>
+##
+##
+##
+##            </table>
+##            <br><font size="1">The parent issue statuses required to allow sub-task issue transitions.</font>
+##        </td>
+##    </tr>
+##</div>
+##</body>
+##</html>
+<table>
     <tr>
-        <td valign="top" bgcolor="fffff0">
-            <span class="label">Custom Fields:</span>
-        </td>
-        <td bgcolor="ffffff">
-            <table cellpadding="2" cellspacing="2">
-                #foreach ($customs in $customFields)
-                    <tr>
-                        <td><input type="radioGroup" name="$customs.getId()"
-                            #if (${selectedCustomField})
-                                #if (${selectedCustomField.contains($customs.Id)})
-                                   CHECKED
-                                #end
-                            #end
-                        ></td>
-                        <td>#displayConstantIcon ($customs)&nbsp;$customs.Name</td>
-                    ##                        <td><input type="checkbox" name="$customs.getId()"
-                    ##                            #if (${selectedCustomField})
-                    ##                                #if (${selectedCustomField.contains($customs.Id)})
-                    ##                                   CHECKED
-                    ##                                #end
-                    ##                            #end
-                    ##                        ></td>
-                    ##                        <td>#displayConstantIcon ($customs)&nbsp;$customs.Name</td>
-                    </tr>
+        <select name="userPickerFrom">
+            #foreach ($customs in $customFields)
+                <option value=$customs.Id>$customs.Name</option>
+                #if (${selectedCustomFields})
+                    #if (${selectedCustomFields.contains($customs.Id)})
+                        CHECKED
+                    #end
+                #end
+            #end
+        </select>
+    </tr>
+    <tr>
+        <select name="userPickerTo">
+            #foreach ($customs in $customFields)
+                #if(!$customs.contains(${selectedCustomFields}))
 
                 #end
-            </table>
-            <br><font size="1">The parent issue statuses required to allow sub-task issue transitions.</font>
-        </td>
+                <option value=$customs.Id>$customs.Name</option>
+                #if (${selectedCustomFields})
+                    #if (${selectedCustomFields.contains($customs.Id)})
+                        CHECKED
+                    #end
+                #end
+            #end
+        </select>
     </tr>
-</div>
-</body>
-</html>
+</table>

@@ -13,7 +13,7 @@ import com.atlassian.jira.util.collect.MapBuilder;
 import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
 import com.atlassian.plugin.spring.scanner.annotation.imports.JiraImport;
 import com.opensymphony.workflow.loader.AbstractDescriptor;
-import com.opensymphony.workflow.loader.ConditionDescriptor;
+import com.opensymphony.workflow.loader.FunctionDescriptor;
 import webwork.action.ActionContext;
 
 import javax.inject.Inject;
@@ -81,42 +81,43 @@ public class UserPickerPostFunctionFactory extends AbstractWorkflowPluginFactory
     protected void getVelocityParamsForView(Map<String, Object> velocityParams, AbstractDescriptor descriptor) {
 
         Collection selectedCustomFieldIds = getSelectedCustomIds(descriptor);
-        List<CustomField> selectedCustomField = new ArrayList<>();
+        List<CustomField> selectedCustomFields = new ArrayList<>();
         for (Object selectedCustomId : selectedCustomFieldIds) {
             String customFieldId = (String) selectedCustomId;
             CustomField customField = customFieldManager.getCustomFieldObject(customFieldId);
-            if (selectedCustomField != null) {
-                selectedCustomField.add(customField);
+            if (customField != null) {
+                selectedCustomFields.add(customField);
             }
         }
 
 
-        velocityParams.put("customs", Collections.unmodifiableCollection(selectedCustomField));
+        velocityParams.put("customFields", Collections.unmodifiableCollection(selectedCustomFields));
     }
 
 
-    public Map<String, ?> getDescriptorParams(Map formParams) {
-        Map params = new HashMap();
+    public Map<String, Object> getDescriptorParams(Map<String, Object> formParams) {
+
         Collection customids = formParams.keySet();
         StringBuilder custIds = new StringBuilder();
-        for (Object custumId : customids) {
-            custIds.append((String) custumId).append(",");
-
-        }
+        String[] upToId = (String[]) formParams.get("userPickerTo");
+        String[] upFromId = (String[]) formParams.get("userPickerFrom");
 
 
-        return MapBuilder.build("customs", custIds.substring(0, custIds.length() - 1));
+        custIds.append(upFromId[0]).append(",").append(upToId[0]);
+
+
+        return MapBuilder.build("customFields", custIds.substring(0, custIds.length()));
     }
 
     private Collection getSelectedCustomIds(AbstractDescriptor descriptor) {
         Collection<String> selectedCustomIds = new ArrayList<>();
-        if (!(descriptor instanceof ConditionDescriptor)) {
+        if (!(descriptor instanceof FunctionDescriptor)) {
             throw new IllegalArgumentException("Descriptor must be a ConditionDescriptor.");
         }
 
-        ConditionDescriptor conditionDescriptor = (ConditionDescriptor) descriptor;
+        FunctionDescriptor functionDescriptor = (FunctionDescriptor) descriptor;
 
-        String customF = (String) conditionDescriptor.getArgs().get("customs");
+        String customF = (String) functionDescriptor.getArgs().get("customFields");
         StringTokenizer st = new StringTokenizer(customF, ",");
 
         while (st.hasMoreTokens()) {
