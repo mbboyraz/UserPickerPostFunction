@@ -101,11 +101,11 @@
 <table>
     <tr>
         <select name="userPickerFrom">
-            #foreach ($customs in $customFields)
+            #foreach ($customs in $customFieldsFrom)
                 <option value=$customs.Id>$customs.Name</option>
                 #if (${selectedCustomFields})
                     #if (${selectedCustomFields.contains($customs.Id)})
-                        CHECKED
+                        SELECTED
                     #end
                 #end
             #end
@@ -113,14 +113,14 @@
     </tr>
     <tr>
         <select name="userPickerTo">
-            #foreach ($customs in $customFields)
+            #foreach ($customs in $customFieldsTo)
                 #if(!$customs.contains(${selectedCustomFields}))
 
                 #end
                 <option value=$customs.Id>$customs.Name</option>
                 #if (${selectedCustomFields})
                     #if (${selectedCustomFields.contains($customs.Id)})
-                        CHECKED
+                        SELECTED
                     #end
                 #end
             #end

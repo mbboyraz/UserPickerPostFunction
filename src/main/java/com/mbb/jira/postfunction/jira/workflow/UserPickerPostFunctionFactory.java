@@ -65,8 +65,8 @@ public class UserPickerPostFunctionFactory extends AbstractWorkflowPluginFactory
         }
         //the default message
 
-        velocityParams.put("customFields", Collections.unmodifiableCollection(userPickers));
-
+        velocityParams.put("customFieldsFrom", Collections.unmodifiableCollection(userPickers));
+        velocityParams.put("customFieldsTo", Collections.unmodifiableCollection(userPickers));
     }
 
 
@@ -92,6 +92,7 @@ public class UserPickerPostFunctionFactory extends AbstractWorkflowPluginFactory
 
 
         velocityParams.put("customFields", Collections.unmodifiableCollection(selectedCustomFields));
+
     }
 
 
