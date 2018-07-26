@@ -98,26 +98,32 @@
 ##</div>
 ##</body>
 ##</html>
-<table>
-    <tr>
-        <select name="userPickerFrom">
+<html>
+<head>
+
+
+</head>
+<body>
+
+<select name="userPickerFrom" id="select">
+    <option disabled>None</option>
             #foreach ($customs in $customFieldsFrom)
                 <option value=$customs.Id>$customs.Name</option>
                 #if (${selectedCustomFields})
                     #if (${selectedCustomFields.contains($customs.Id)})
                         SELECTED
+
                     #end
                 #end
             #end
         </select>
-    </tr>
-    <tr>
-        <select name="userPickerTo">
-            #foreach ($customs in $customFieldsTo)
-                #if(!$customs.contains(${selectedCustomFields}))
 
-                #end
+<select name="userPickerTo" id="select">
+    <option disabled>None</option>
+            #foreach ($customs in $customFieldsTo)
+
                 <option value=$customs.Id>$customs.Name</option>
+
                 #if (${selectedCustomFields})
                     #if (${selectedCustomFields.contains($customs.Id)})
                         SELECTED
@@ -125,5 +131,28 @@
                 #end
             #end
         </select>
-    </tr>
-</table>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $('select').change(function () {
+
+        var value = $(this).val();
+
+        $(this).siblings('select').children('option').each(function () {
+            if ($(this).val() === value) {
+                $(this).attr('disabled', true).siblings().removeAttr('disabled');
+            }
+        });
+        if ($(this).val() === null || value === null) {
+            $('add_submit').attr('disabled', true);
+        }
+
+    });
+</script>
+
+</html>
+
+
