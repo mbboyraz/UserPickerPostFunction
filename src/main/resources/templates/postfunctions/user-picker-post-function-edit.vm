@@ -1,34 +1,33 @@
-
 <html>
 
 <body>
 
 <select name="userPickerFrom" id="select1">
     <option value="null">Select User Picker</option>
-            #foreach ($customs in $customFieldsFrom)
-                <option value=$customs.Id>$customs.Name</option>
-                #if (${selectedCustomFields})
-                    #if (${selectedCustomFields.contains($customs.Id)})
-                        SELECTED
+    #foreach ($customs in $customFieldsFrom)
+        <option value=$customs.Id>$customs.Name</option>
+        #if (${selectedCustomFields})
+            #if (${selectedCustomFields.contains($customs.Id)})
+                SELECTED
 
-                    #end
-                #end
             #end
-        </select>
+        #end
+    #end
+</select>
 
 <select name="userPickerTo" id="select2">
     <option value="null">Select User Picker</option>
-            #foreach ($customs in $customFieldsTo)
+    #foreach ($customs in $customFieldsTo)
 
-                <option value=$customs.Id>$customs.Name</option>
+        <option value=$customs.Id>$customs.Name</option>
 
-                #if (${selectedCustomFields})
-                    #if (${selectedCustomFields.contains($customs.Id)})
-                        SELECTED
-                    #end
-                #end
+        #if (${selectedCustomFields})
+            #if (${selectedCustomFields.contains($customs.Id)})
+                SELECTED
             #end
-        </select>
+        #end
+    #end
+</select>
 
 </body>
 
@@ -38,13 +37,16 @@
 <script>
 
     AJS.$(document).ready(function () {
-        AJS.$('#add_submit').attr('disabled', true);
+        AJS.$('#update_submit').attr('disabled', true);
     });
 
     $('select').change(function () {
 
         var value = $(this).val();
-
+        var attributesSelect = $('#select1').children('option').attr();
+        if (attributesSelect == 'selected') {
+        ## $('#select1').val() =
+        }
         $(this).siblings('select').children('option').each(function () {
             if ($(this).val() === value) {
                 $(this).attr('disabled', true).siblings().removeAttr('disabled');
@@ -55,10 +57,10 @@
         if ($('#select1').val() != "null" && $('#select2').val() != "null") {
             console.log(value);
 
-            $('#add_submit').removeAttr('disabled');
+            $('#update_submit').removeAttr('disabled');
         }
         if ($('#select1').val() == "null" || $('#select2').val() == "null") {
-            $('#add_submit').attr('disabled', true);
+            $('#update_submit').attr('disabled', true);
         }
 
     });

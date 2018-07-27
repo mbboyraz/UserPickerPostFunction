@@ -30,7 +30,7 @@
         <resource type="velocity" name="input-parameters"
                   location="templates/postfunctions/user-picker-post-function-input.vm"/>
         <resource type="velocity" name="edit-parameters"
-                  location="templates/postfunctions/user-picker-post-function-input.vm"/>
+                  location="templates/postfunctions/user-picker-post-function-edit.vm"/>
       <deletable>true</deletable>
   </workflow-function>
 
