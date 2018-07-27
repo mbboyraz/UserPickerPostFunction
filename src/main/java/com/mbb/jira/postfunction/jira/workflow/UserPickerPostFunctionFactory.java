@@ -37,6 +37,7 @@ public class UserPickerPostFunctionFactory extends AbstractWorkflowPluginFactory
     private final CustomFieldManager customFieldManager;
     //private WorkflowManager workflowManager;
     ArrayList<CustomField> userPickers;
+    CustomField selectedCUPF, selectedCUPT;
 
 
     @Inject
@@ -73,7 +74,12 @@ public class UserPickerPostFunctionFactory extends AbstractWorkflowPluginFactory
     @Override
     protected void getVelocityParamsForEdit(Map<String, Object> velocityParams, AbstractDescriptor descriptor) {
         getVelocityParamsForInput(velocityParams);
-        velocityParams.put("selectedCustomFields", getSelectedCustomIds(descriptor));
+        String selectedUPFrom = getSelectedCustomIds(descriptor).toArray()[0].toString();
+        String selectedUPTo = getSelectedCustomIds(descriptor).toArray()[1].toString();
+        selectedCUPF = customFieldManager.getCustomFieldObject(selectedUPFrom);
+        selectedCUPT = customFieldManager.getCustomFieldObject(selectedUPTo);
+        velocityParams.put("selectedCustomField1", selectedCUPF);
+        velocityParams.put("selectedCustomField2", selectedCUPT);
     }
 
 

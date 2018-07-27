@@ -3,10 +3,10 @@
 <body>
 
 <select name="userPickerFrom" id="select1">
-    <option value="null">Select User Picker</option>
+    <option value="null">$selectedCustomField1</option>
     #foreach ($customs in $customFieldsFrom)
         <option value=$customs.Id>$customs.Name</option>
-        #if (${selectedCustomFields})
+        #if (${selectedCustomField1})
             #if (${selectedCustomFields.contains($customs.Id)})
                 SELECTED
 
@@ -16,12 +16,12 @@
 </select>
 
 <select name="userPickerTo" id="select2">
-    <option value="null">Select User Picker</option>
+    <option value="null">$selectedCustomField2</option>
     #foreach ($customs in $customFieldsTo)
 
         <option value=$customs.Id>$customs.Name</option>
 
-        #if (${selectedCustomFields})
+        #if (${selectedCustomFields2})
             #if (${selectedCustomFields.contains($customs.Id)})
                 SELECTED
             #end
@@ -43,19 +43,16 @@
     $('select').change(function () {
 
         var value = $(this).val();
-        var attributesSelect = $('#select1').children('option').attr();
-        if (attributesSelect == 'selected') {
-        ## $('#select1').val() =
-        }
+
+
         $(this).siblings('select').children('option').each(function () {
             if ($(this).val() === value) {
                 $(this).attr('disabled', true).siblings().removeAttr('disabled');
-
             }
 
         });
         if ($('#select1').val() != "null" && $('#select2').val() != "null") {
-            console.log(value);
+
 
             $('#update_submit').removeAttr('disabled');
         }
